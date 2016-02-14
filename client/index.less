@@ -1,0 +1,53 @@
+@import "../node_modules/bootstrap/less/bootstrap.less";
+
+.split-2-column {
+  -webkit-column-count: 2;
+  -moz-column-count: 2;
+  column-count: 2;
+}
+
+.split-3-column {
+  -webkit-column-count: 3;
+  -moz-column-count: 3;
+  column-count: 3;
+}
+
+.grid-item {
+  width: 20%;
+  padding: 2px;
+}
+
+.grid-sizer {
+  width: 20%;
+}
+
+.grid-item-content {
+  width: 100%;
+  height: 100%;
+  -webkit-transition: width 0.4s, height 0.4s;
+  transition: width 0.4s, height 0.4s;
+}
+
+.grid-item.expanded {
+  width: 80%;
+}
+
+.radio-btn {
+  outline: none;
+}
+
+.radio-btn:focus {
+  background-color: #fff;
+  outline: none;
+  border-color: rgb(204, 204, 204);
+}
+
+.radio-btn:hover {
+  background-color: #fff;
+  outline: none;
+  border-color: rgb(204, 204, 204);
+}
+
+.grid {
+  margin-top: 5px;
+}

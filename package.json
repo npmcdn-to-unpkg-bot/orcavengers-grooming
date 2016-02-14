@@ -1,0 +1,37 @@
+{
+  "name": "orcavengers-grooming",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "start": "npm run build && forever start server/index.js",
+    "stop": "forever stop server/index.js",
+    "build": "browserify -t reactify -t lessify ./client/index.jsx | uglifyjs > ./public/index.js",
+    "watch": "nodemon server/index.js & npm run watch:client",
+    "watch:client": "watchify -t reactify -t lessify ./client/index.jsx --debug -o ./public/index.js"
+  },
+  "author": "Wei Chen",
+  "license": "UNLICENSED",
+  "devDependencies": {
+    "bootstrap": "^3.3.6",
+    "browserify": "^13.0.0",
+    "lessify": "^1.0.1",
+    "lie": "^3.0.2",
+    "nodemon": "^1.8.1",
+    "react": "^0.14.7",
+    "react-dom": "^0.14.7",
+    "react-router": "^2.0.0",
+    "reactify": "^1.1.1",
+    "socket.io-client": "^1.4.5",
+    "uglifyjs": "^2.4.10",
+    "watchify": "^3.7.0"
+  },
+  "dependencies": {
+    "compression": "^1.6.1",
+    "express": "^4.13.4",
+    "flux": "^2.1.1",
+    "forever": "^0.15.1",
+    "lodash": "^4.3.0",
+    "randomstring": "^1.1.4",
+    "socket.io": "^1.4.5"
+  }
+}

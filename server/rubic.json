@@ -1,0 +1,61 @@
+{
+  "questions":[
+    {
+      "text": "Level of DEV difficulties?",
+      "options": [
+        {"name": "Low", "hint": "Reminder(0), Trivial-Cosmetics(1), No-Logic(1), No-Migration(1), Some-Logic(2)"},
+        {"name": "Mid", "hint": "High-Effort(3), UI/Mastiff(5), Mini-Spike(5)"},
+        {"name": "High", "hint": "Prod-Investigation(8), Should-Have-Spiked(8), Steep-Learning-Curve(13), Many-Moving-Parts(13), Legacy/Poor-Code(13)"}
+      ]
+    },
+    {
+      "text": "Level of TEST difficulties?",
+      "options": [
+        {"name": "Low", "hint": "No-Testing(0), Well-Known(1), No-Logic(1), Some-Logic(2)"},
+        {"name": "Mid", "hint": "High-Effort(3)"},
+        {"name": "High", "hint": "Special-Test-Data-Gen(8), Many-Moving-Parts(13)"}
+      ]
+    },
+    {
+      "text": "Level of UNKNOWN?",
+      "options": [
+        {"name": "Low", "hint": "Zero-Risk(0), Well-Known(1), Little-Doubt(1), Confirmation/Low-Risk-Spikes(2)"},
+        {"name": "Mid", "hint": "Some-Unknown(5), Mini-Spike(5)"},
+        {"name": "High", "hint": "New/Very-Unknown(8), Prod-Investigation(8), Should-Have-Spiked(8), Steep-Learning-Curve(13)"}
+      ]
+    },
+    {
+      "text": "Level of RISK?",
+      "options": [
+        {"name": "Low", "hint": "Zero-Risk(0)"},
+        {"name": "Mid", "hint": "Low-Risk(3)"},
+        {"name": "High", "hint": "High-Risk(13)"}
+      ]
+    },
+    {
+      "text": "Level of ENVIRONMENTAL difficulties?",
+      "options": [
+        {"name": "Low", "hint": "No-Migration(1)"},
+        {"name": "Mid", "hint": "UI/Mastiff(5), Env-Pain(5)"},
+        {"name": "High", "hint": "Prod-Investigation(8), Env-Death(13)"}
+      ]
+    },
+    {
+      "text": "Level of DEPENDENCIES externally?",
+      "options": [
+        {"name": "Low", "hint": "No-External-Dep(1, 2)"},
+        {"name": "Mid", "hint": "Minimal-External-Dep(3), Medium-External-Dep(5)"},
+        {"name": "High", "hint": "Prod-Investigation(8)"}
+      ]
+    },
+    {
+      "text": "Chances of NOT COMPLETING?",
+      "options": [
+        {"name": "Low", "hint": ""},
+        {"name": "Mid", "hint": "Worst-Case-Doable(5)"},
+        {"name": "High", "hint": "Low-Risk-of-Not-Completing(8)"}
+      ]
+    }
+  ],
+  "point_scale": [0, 1, 2, 3, 5, 8, 13]
+}
