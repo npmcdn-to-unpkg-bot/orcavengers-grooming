@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
+    "docker": "forever server/index.js",
     "start": "npm run build && forever start server/index.js",
     "stop": "forever stop server/index.js",
     "build": "browserify -t reactify -t lessify ./client/index.jsx | uglifyjs > ./public/index.js",
