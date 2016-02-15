@@ -25,6 +25,9 @@ var VotingView = React.createClass({
   },
 
   onNewAnswerSelected: function(question_index, answer_index) {
+    if(this.state.status.answers[question_index] == answer_index){
+      answer_index = null;
+    }
     doAction(ActionTypes.VOTING_NEW_ANSWER, {
       question_index: question_index,
       answer_index: answer_index
@@ -32,6 +35,9 @@ var VotingView = React.createClass({
   },
 
   onNewPointSelected: function(point_index) {
+    if(this.state.status.point_index == point_index){
+      point_index = null;
+    }
     doAction(ActionTypes.VOTING_NEW_POINT, {
       point_index: point_index
     });
