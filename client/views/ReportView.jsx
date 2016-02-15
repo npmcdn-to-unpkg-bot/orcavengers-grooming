@@ -55,20 +55,17 @@ var ReportView = React.createClass({
           >Start Over</a>
           <div className="grid">
             <div className="grid-sizer"></div>
-            {this.state.meeting_data.report.map(function(question, index) {
-              return <QuestionReportComponent
-                key={index}
-                question={question.question}
-                answers={question.answers}
-                show_legend={false}
-                show_hint={false}
-              />;
-            })}
-            <QuestionReportComponent
-              question={{text: 'Point Estimate'}}
-              answers={this.state.meeting_data.point_answers}
-              show_legend={false}
-            />
+              <QuestionReportComponent
+                question={{text: 'Point Estimate'}}
+                answers={this.state.meeting_data.point_answers}
+              />
+              {this.state.meeting_data.report.map(function(question, index) {
+                return <QuestionReportComponent
+                  key={index}
+                  question={question.question}
+                  answers={question.answers}
+                />;
+              })}
           </div>
         </div>
       );
