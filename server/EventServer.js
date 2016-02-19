@@ -13,6 +13,7 @@ var initServer = function(io){
       dispatcher.dispatch(event);
     });
     socket.on('disconnect', function(){
+      console.log('disconnect!');
       dispatcher.dispatch({
         type:EventTypes.SOCKET_DISCONNECT,
         socket: socket
