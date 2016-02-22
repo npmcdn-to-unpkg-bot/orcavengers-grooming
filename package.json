@@ -2,13 +2,19 @@
   "name": "orcavengers-grooming",
   "version": "1.0.0",
   "description": "",
+  "engines": {
+    "node": "4.2.1"
+  },
   "scripts": {
-    "docker": "forever server/index.js",
-    "start": "npm run build && forever start server/index.js",
+    "postinstall": "npm run build",
+    "start": "forever server/index.js",
     "stop": "forever stop server/index.js",
-    "build": "browserify -t reactify -t lessify ./client/index.jsx | uglifyjs > ./public/index.js",
-    "watch": "nodemon server/index.js & npm run watch:client",
-    "watch:client": "watchify -t reactify -t lessify ./client/index.jsx --debug -o ./public/index.js"
+    "build": "npm run build:client && npm run build:spy",
+    "build:client": "browserify -t reactify -t lessify ./client/index.jsx | uglifyjs > ./public/index.min.js",
+    "build:spy": "browserify -t reactify -t lessify ./rallyspy/index.js | uglifyjs > ./public/spy.min.js",
+    "watch": "nodemon server/index.js & npm run watch:client & npm run watch:spy",
+    "watch:client": "watchify -t reactify -t lessify ./client/index.jsx --debug -o ./public/index.min.js",
+    "watch:spy": "watchify -t reactify -t lessify ./rallyspy/index.js --debug -o ./public/spy.min.js"
   },
   "author": "Wei Chen",
   "license": "UNLICENSED",
