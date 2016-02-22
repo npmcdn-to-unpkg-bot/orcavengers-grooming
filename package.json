@@ -19,11 +19,14 @@
   "author": "Wei Chen",
   "license": "UNLICENSED",
   "devDependencies": {
+    "nodemon": "^1.8.1",
+    "watchify": "^3.7.0"
+  },
+  "dependencies": {
     "bootstrap": "^3.3.6",
     "browserify": "^13.0.0",
     "lessify": "^1.0.1",
     "lie": "^3.0.2",
-    "nodemon": "^1.8.1",
     "object-assign": "^4.0.1",
     "react": "^0.14.7",
     "react-dom": "^0.14.7",
@@ -31,9 +34,7 @@
     "reactify": "^1.1.1",
     "socket.io-client": "^1.4.5",
     "uglifyjs": "^2.4.10",
-    "watchify": "^3.7.0"
-  },
-  "dependencies": {
+
     "compression": "^1.6.1",
     "express": "^4.13.4",
     "flux": "^2.1.1",
