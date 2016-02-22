@@ -1,8 +1,13 @@
 function main() {
+  document.querySelector('.alm-header-container').style.display = 'none';
+  document.querySelector('.footer-container').style.display = 'none';
+  document.querySelector('.ribbon-navigation').style.display = 'none';
+  document.querySelector('.detailContentRightPanel').style.display = 'none';
+
   var viewport = document.querySelector("#viewport");
   var all = viewport.getElementsByTagName("*");
 
-  viewport.style.width = "60%";
+  viewport.style.width = "40%";
   for (var i = 0; i < all.length; i++) {
     if (all[i].offsetWidth > viewport.offsetWidth) {
       all[i].style.width = "100%";
@@ -12,7 +17,7 @@ function main() {
   viewport.style.float = 'right';
 
   var sidepan = document.createElement('iframe');
-  sidepan.src = 'https://localhost:3001/rallyspy';
+  sidepan.src = 'https://groom.herokuapp.com/rallyspy';
   sidepan.style.position = 'fixed';
   sidepan.style.left = '0';
   sidepan.style.top = '0';
@@ -20,16 +25,11 @@ function main() {
   sidepan.style.height = window.innerHeight + 'px';
 
   document.getElementsByTagName('body')[0].insertBefore(sidepan, viewport);
-
-  document.querySelector('.alm-header-container').style.display = 'none';
-  document.querySelector('.footer-container').style.display = 'none';
-  document.querySelector('.ribbon-navigation').style.display = 'none';
-  document.querySelector('.detailContentRightPanel').style.display = 'none';
 }
 
 setTimeout(function doStuff(){
   if (document.querySelector('.detailContentRightPanel')) {
-    main();
+    setTimeout(main, 2000);
   }else{
     setTimeout(doStuff, 1000);
   }
