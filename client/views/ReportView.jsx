@@ -3,6 +3,7 @@ var ReportStore = require('../stores/ReportStore.js');
 var ActionTypes = require('../Actions.js').ActionTypes;
 var doAction = require('../Actions.js').doAction;
 var QuestionReportComponent = require('../components/QuestionReportComponent.jsx');
+var Cookies = require('cookies-js');
 
 var ReportView = React.createClass({
   getInitialState: function() {
@@ -14,6 +15,7 @@ var ReportView = React.createClass({
   componentDidMount: function() {
     ReportStore.addListener(this.onChange);
 
+    Cookies.set('meeting_token', this.props.params.meeting_token, {expires: 3600});
     doAction(ActionTypes.REPORT_INIT, {meeting_token: this.props.params.meeting_token});
   },
   componentDidUpdate: function() {
@@ -35,7 +37,7 @@ var ReportView = React.createClass({
     doAction(ActionTypes.REPORT_REVEAL);
   },
 
-  onResetClicked: function(){
+  onResetClicked: function() {
     doAction(ActionTypes.REPORT_RESET);
   },
 
@@ -55,17 +57,17 @@ var ReportView = React.createClass({
           >Start Over</a>
           <div className="grid">
             <div className="grid-sizer"></div>
-              <QuestionReportComponent
-                question={{text: 'Point Estimate'}}
-                answers={this.state.meeting_data.point_answers}
-              />
-              {this.state.meeting_data.report.map(function(question, index) {
-                return <QuestionReportComponent
-                  key={index}
-                  question={question.question}
-                  answers={question.answers}
-                />;
-              })}
+            <QuestionReportComponent
+              question={{text: 'Point Estimate'}}
+              answers={this.state.meeting_data.point_answers}
+            />
+            {this.state.meeting_data.report.map(function(question, index) {
+              return <QuestionReportComponent
+                key={index}
+                question={question.question}
+                answers={question.answers}
+              />;
+            })}
           </div>
         </div>
       );
@@ -81,34 +83,29 @@ var ReportView = React.createClass({
           </div>
         </div>;
     } else {
+      var thinking_people = this.state.meeting_data.people.filter(function(person) {
+        return !person.finished && person.online;
+      });
       panel = (
         <div className="container">
           <div className="row">
             <div className="col-md-12">
               <div className="panel panel-default">
                 <div className="panel-body">
-                  <a className={"btn btn-lg btn-primary btn-block" + (reveal_available?'':' disabled')}
+                  <a className={"btn btn-lg btn-primary btn-block"}
                      onClick={this.onRevealClicked}
                   >Show Result</a>
                   <div className="panel panel-default">
-                    <div className={"panel-body" + (this.state.meeting_data.people.length > 10? ' split-2-column':'')}>
+                    <div className={"panel-body" + (thinking_people.length > 10? ' split-2-column':'')}>
+                      <p>People still thinking:</p>
                       <table className="table table-striped">
                         <tbody>
-                        {this.state.meeting_data.people.map(function(person) {
-                          var status;
-                          if (person.finished) {
-                            status = 'Finished';
-                          } else {
-                            if (!person.online) {
-                              status = 'Disconnected';
-                            } else {
-                              status = 'Thinking...'
-                            }
-                          }
-                          return <tr key={person.name}>
-                            <td>{person.name}</td>
-                            <td>{status}</td>
-                          </tr>
+                        {thinking_people.map(function(person) {
+                          return (
+                            <tr key={person.name}>
+                              <td>{person.name}</td>
+                            </tr>
+                          );
                         })}
                         </tbody>
                       </table>

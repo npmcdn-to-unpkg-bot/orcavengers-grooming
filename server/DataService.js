@@ -5,11 +5,7 @@ var EventTypes = require('../EventTypes.js');
 var _ = require('lodash');
 
 var host_token = 'host';
-var meetings = {
-  //'abcd': {
-  //  name: 'test meeting 1'
-  //}
-};
+var meetings = {};
 
 var get_token = function() {
   return randomstring.generate({
@@ -54,7 +50,7 @@ var add_meeting = function(meeting_name) {
       }
     },
     show_result: false,
-    fresh: true
+    inactive_time: null
   };
   return token;
 };
@@ -128,8 +124,8 @@ var event_handler = function(event) {
       });
     });
     _.forEach(meetings, function(meeting, meeting_token) {
-      if (meeting.people.host.sockets.length <= 0 && !meeting.fresh) {
-        delete meetings[meeting_token];
+      if (meeting.people.host.sockets.length <= 0) {
+        meetings[meeting_token].inactive_time = Date.now();
       }
     });
     EventServer.broadcast(EventTypes.DATA_CHANGED);
@@ -252,7 +248,7 @@ var event_handler = function(event) {
     });
     event.callback(null, result);
     if (record_new_socket(meeting.people.host, event.socket)) {
-      meeting.fresh = false;
+      meeting.inactive_time = null;
       EventServer.broadcast(EventTypes.DATA_CHANGED);
     }
     break;
@@ -288,6 +284,25 @@ var event_handler = function(event) {
   }
 
 };
+
+var recurringWorker = function() {
+  var now = Date.now();
+  var changed = false;
+  _.forEach(meetings, function(meeting, meeting_token) {
+    if (meeting.people.host.sockets.length <= 0 &&
+      meeting.inactive_time &&
+      now - meeting.inactive_time > 3600000) {
+      delete meetings[meeting_token];
+      changed = true;
+    }
+  });
+  if (changed) {
+    EventServer.broadcast(EventTypes.DATA_CHANGED);
+  }
+};
+
+setInterval(recurringWorker, 300000);
+
 var dispatcherToken = EventServer.register(event_handler);
 
 module.exports = {

@@ -13,6 +13,9 @@ var WelcomeView = React.createClass({
                 <Link className="btn btn-primary btn-lg btn-block" to="/signup/host" role="button">I am Host</Link>
                 <Link className="btn btn-primary btn-lg btn-block" to="/signup/voter" role="button">I am Voter</Link>
               </div>
+              <div className="well">
+                <h2>http://groom.herokuapp.com</h2>
+              </div>
             </div>
           </div>
         </div>
