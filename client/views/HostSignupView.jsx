@@ -54,7 +54,7 @@ var HostSignUpView = React.createClass({
                 <div className={'form-group' + (this.state.error ? ' has-error' : '')}>
                   <div className="well">
                     <p>Drag and drop this into your bookmark bar</p>
-                    <a className="btn btn-primary btn-sm" href="javascript:(function()%7Bfunction%20callback()%7B%7Dvar%20s%3Ddocument.createElement(%22script%22)%3Bs.src%3D%22https%3A%2F%2Fgroom.herokuapp.com%2Fspy.min.js%22%3Bif(s.addEventListener)%7Bs.addEventListener(%22load%22%2Ccallback%2Cfalse)%7Delse%20if(s.readyState)%7Bs.onreadystatechange%3Dcallback%7Ddocument.body.appendChild(s)%3B%7D)()">RallyGroom</a>
+                    <a className="btn btn-primary btn-sm" href={this.state.bookmarklet}>RallyGroom</a>
                   </div>
                   <label htmlFor="name">Start a new meeting</label>
                   <input type="text" className="form-control" id="name"

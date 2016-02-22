@@ -13,7 +13,8 @@ var storeData = {
   error: null,
   new_meeting_token: null,
   new_person_token: null,
-  person_exist_data: null
+  person_exist_data: null,
+  bookmarklet: null
 };
 
 var getData = function() {
@@ -23,16 +24,17 @@ var getData = function() {
 var init = function() {
   EventClient.emit(EventTypes.GET_MEETING_LIST)
     .then(function(data) {
-      storeData.meetings = data;
+      storeData.meetings = data.meetings;
+      storeData.bookmarklet = data.bookmarklet;
       emitChange();
     });
 };
 
-var goToMeetingAsHost = function(meeting_token){
+var goToMeetingAsHost = function(meeting_token) {
   window.location.href = '/meeting/' + meeting_token + '/voting_report';
 };
 
-var goToMeetingAsVoter = function(meeting_token, person_token){
+var goToMeetingAsVoter = function(meeting_token, person_token) {
   window.location.href = '/meeting/' + meeting_token + '/vote_as/' + person_token;
 };
 
@@ -59,18 +61,18 @@ var actionHandler = function(action) {
 
   case ActionTypes.SIGN_UP_ADD_PERSON:
     EventClient.emit(EventTypes.CREATE_PERSON, action.data)
-    .then(function(data){
-      if (data.exists){
-        storeData.person_exist_data = data;
+      .then(function(data) {
+        if (data.exists) {
+          storeData.person_exist_data = data;
+          emitChange();
+        } else {
+          goToMeetingAsVoter(data.meeting_token, data.person_token);
+        }
+      })
+      .catch(function(err) {
+        storeData.error = err;
         emitChange();
-      }else{
-        goToMeetingAsVoter(data.meeting_token, data.person_token);
-      }
-    })
-    .catch(function(err){
-      storeData.error = err;
-      emitChange();
-    });
+      });
     break;
 
   case EventTypes.DATA_CHANGED:

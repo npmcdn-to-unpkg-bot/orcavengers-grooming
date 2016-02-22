@@ -1,4 +1,4 @@
-function main() {
+function main(url) {
   document.querySelector('.alm-header-container').style.display = 'none';
   document.querySelector('.footer-container').style.display = 'none';
   document.querySelector('.ribbon-navigation').style.display = 'none';
@@ -17,7 +17,7 @@ function main() {
   viewport.style.float = 'right';
 
   var sidepan = document.createElement('iframe');
-  sidepan.src = 'https://groom.herokuapp.com/rallyspy';
+  sidepan.src = url;
   sidepan.style.position = 'fixed';
   sidepan.style.left = '0';
   sidepan.style.top = '0';
@@ -27,10 +27,12 @@ function main() {
   document.getElementsByTagName('body')[0].insertBefore(sidepan, viewport);
 }
 
-setTimeout(function doStuff(){
-  if (document.querySelector('.detailContentRightPanel')) {
-    setTimeout(main, 2000);
-  }else{
-    setTimeout(doStuff, 1000);
-  }
-}, 1000);
+window.grooming_load = function(url){
+  setTimeout(function delayedLoading(){
+    if (document.querySelector('.detailContentRightPanel')) {
+      setTimeout(main.bind(null, url), 3000);
+    }else{
+      setTimeout(delayedLoading, 1000);
+    }
+  }, 1000);
+};

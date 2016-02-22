@@ -3,6 +3,7 @@ var randomstring = require("randomstring");
 var EventServer = require("./EventServer.js");
 var EventTypes = require('../EventTypes.js');
 var _ = require('lodash');
+var bookmarklet = require('bookmarklet');
 
 var host_token = 'host';
 var meetings = {};
@@ -133,7 +134,20 @@ var event_handler = function(event) {
 
 
   case EventTypes.GET_MEETING_LIST:
-    event.callback(null, list_meetings());
+    result = {};
+    result.meetings = list_meetings();
+    var scriptUrl, pageUrl;
+    if (process.env.NODE_ENV == 'production') {
+      scriptUrl = 'https://groom.herokuapp.com/spy.min.js';
+      pageUrl = 'https://groom.herokuapp.com/rallyspy';
+    } else {
+      scriptUrl = 'https://localhost:3001/spy.min.js';
+      pageUrl = 'https://localhost:3001/rallyspy';
+    }
+    result.bookmarklet = bookmarklet.convert('grooming_load(\'' + pageUrl + '\');', {
+      script: [scriptUrl]
+    });
+    event.callback(null, result);
     break;
 
   case EventTypes.CREATE_MEETING:
