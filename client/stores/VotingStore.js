@@ -2,6 +2,7 @@ var EventClient = require("../EventClient.js");
 var EventTypes = require("../../EventTypes.js");
 var EventEmitter = require('events').EventEmitter;
 var ActionTypes = require('../Actions.js').ActionTypes;
+var assign = require('object-assign');
 
 var ChangedEvent = 'CHANGED';
 
@@ -33,7 +34,7 @@ var init = function() {
       person_token: storeData.person_token
     })
     .then(function(data) {
-      Object.assign(storeData, data);
+      assign(storeData, data);
       emitChange();
     })
     .catch(function(err) {
